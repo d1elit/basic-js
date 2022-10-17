@@ -13,9 +13,57 @@ const { NotImplementedError } = require('../extensions/index.js');
  * transform([1, 2, 3, '--discard-prev', 4, 5]) => [1, 2, 4, 5]
  * 
  */
-function transform(/* arr */) {
-  throw new NotImplementedError('Not implemented');
-  // remove line with error and write your code here
+function transform( arr ) {
+    if (!(arr instanceof Array)) throw new Error("'arr' parameter must be an instance of the Array!");
+    let clArr = arr.slice(0)
+    arr.forEach((el,i) => {
+     if(el == '--double-next') {  
+        if(i == arr.length-1) {
+            clArr.splice(i,1)
+        } else {
+            clArr.splice(i,1,clArr[i+1])
+        }
+        
+     }
+     if(el == '--discard-prev') {
+        if(i == 0) {
+            clArr.splice(i,1)
+        } else {
+            clArr.splice(i-1,2)
+        }
+
+     }
+     if(el == '--discard-next') {
+        if(i == arr.length-1) {
+            clArr.splice(i,1) 
+        } else {
+            clArr.splice(i,2) 
+        }
+       
+     }
+     if(el == '--double-prev') {
+       
+        let index = clArr.indexOf('--double-prev')
+      
+        if(i == 0) {
+            clArr.splice(i,1)
+        } else {
+            console.log(clArr, 'index: ', index, 'elem: ', clArr[index-1])
+            clArr.splice(index-1,0,clArr[index-1])
+            console.log(clArr, 'index: ', index, 'elem: ', clArr[index-1])
+            // clArr.splice( clArr.indexOf('--double-prev'),1)
+        }
+     }
+    
+    })
+    
+    clArr.indexOf('--double-next') != -1 ? clArr.splice(clArr.indexOf('--double-next'),1) : false
+    clArr.indexOf('--double-prev') != -1 ? clArr.splice(clArr.indexOf('--double-prev'),1) : false
+    clArr.indexOf('--discard-next') != -1 ? clArr.splice(clArr.indexOf('--discard-next'),1) : false
+    clArr.indexOf('--discard-prev') != -1 ? clArr.splice(clArr.indexOf('--discard-prev'),1) : false
+
+
+   return clArr
 }
 
 module.exports = {
