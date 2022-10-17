@@ -1,4 +1,4 @@
-const { NotImplementedError } = require('../extensions/index.js');
+let { NotImplementedError } = require('../extensions/index.js');
 
 /**
  * Create a repeating string based on the given parameters
@@ -15,10 +15,33 @@ const { NotImplementedError } = require('../extensions/index.js');
  * => 'STRINGPLUS00PLUS00PLUS**STRINGPLUS00PLUS00PLUS**STRINGPLUS00PLUS00PLUS'
  *
  */
-function repeater(/* str, options */) {
-  throw new NotImplementedError('Not implemented');
-  // remove line with error and write your code here
+
+function repeater( str, options ) {
+    let repeatTimes  = (options.hasOwnProperty('repeatTimes')) ? options.repeatTimes : 1
+    let separator = (options.hasOwnProperty('separator')) ? options.separator : '+'
+    let addition = (options.hasOwnProperty('addition')) ? `${options.addition}` : ''
+    let additionRepeatTimes  = (options.hasOwnProperty('additionRepeatTimes')) ? options.additionRepeatTimes  : 1
+    let additionSeparator  = (options.hasOwnProperty('additionSeparator')) ? options.additionSeparator : '|';
+    let result = ''
+
+    for(i = 0; i < repeatTimes; i++) {
+        result += str
+        for (j = 0; j < additionRepeatTimes; j++){   
+            if( j < additionRepeatTimes - 1 )   {
+                result +=  addition + additionSeparator
+            }  else {
+                result += addition
+            }       
+        }        
+        if(i < repeatTimes - 1) {
+            result += separator
+        } else {
+            result += ''
+        }      
+     }
+    return result
 }
+
 
 module.exports = {
   repeater
